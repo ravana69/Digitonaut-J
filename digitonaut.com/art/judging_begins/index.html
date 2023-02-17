@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from digitonaut.com/art/judging_begins/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 17 Feb 2023 04:32:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset='utf-8'\>
+<meta name='apple-mobile-web-app-capable' content='yes'><meta name='apple-mobile-web-app-status-bar-style' content='black-translucent'><title>Judging Begins</title>
+
+<script src="shader-web-background.min.js"></script>
+
+<script type="x-shader/x-fragment" id="Image">
+precision highp float;
+uniform vec2  iResolution;
+uniform float iTime;
+
+// -------------------------------------------------------------------------------------------------- Paste your Shadertoy code here:
+
+// Neon Light Illusion by nimitz (twitter: @stormoid)
+// https://www.shadertoy.com/view/llXGzB
+// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+// Contact the author for other licensing options
+
+/*
+	The Two tweets challenge 2015 is over.
+
+	An overwhelming	amount of great stuff has been submitted in
+	the past 2 weeks, I was expecting maybe a dozen entries and
+	we are at 105 at the time of this writing.
+
+	Thanks to everyone who participated and helped make this
+	fun and interesting.
+
+
+
+	Judging:
+		Fow anyone who wants to help with judging, you can
+		send you top 5 picks in order (from #1 to #5, best being #1)
+		via	email at: nimitzstg at gmail.com
+		Anyone who participated in the tournament can
+		be a judge, just let me know what's your shadertoy
+		username in the email. Only restriction is you can't
+		vote for your own shaders and you must send exactly
+		5 picks. You can vote for multiple shaders of a single
+		user in your top 5.
+
+	TLDR:
+		-Send your top 5 shaders in order from best to worst
+		-Don't vote for yourself
+		-Mention your shadertoy username
+		-You can vote for multiple shaders of a single user
+
+	Points Calculation:
+		Every judge has the same voting weight, your
+		first pick gets 1 point, second 0.75 points,
+		third 0.5625 points and so on (n+1 = n*0.75).
+		Winners are the shaders with most points.
+*/
+
+void mainImage( out vec4 f, in vec2 w ){
+    vec4 o = gl_FragCoord/iResolution.xyxx-.5, d=o, r, z=d-d;
+    float t = iTime, c;
+    o.xz += t;
+    for(int i=0;i<99;i++)
+    	c= dot( (r = cos(o + o.w*sin(t*.9)*.1)).xyz, r.xyz),
+    	o -= d* dot( (r = cos(r/c*7.)).zy, r.zy ) *c*.2,
+    	z += abs(sin(vec4(9,0,1,1)+(o.y + t + o.w)))*.12*c/(o.w*o.w+ 6.5);
+    f = z*z*z;
+}
+
+// -------------------------------------------------------------------------------------------------- End of Shadertoy code
+
+
+void main() {
+mainImage(gl_FragColor, gl_FragCoord.xy);
+}
+</script>
+<script>
+shaderWebBackground.shade({
+	shaders: {
+		Image: {
+			uniforms: {
+				iResolution: (gl, loc, ctx) => gl.uniform2f(loc, ctx.width, ctx.height),
+				iTime: (gl, loc) => gl.uniform1f(loc, performance.now() / 1000)
+			}
+		}
+	}
+});
+</script>
+</head>
+<body>
+</body>
+
+<!-- Mirrored from digitonaut.com/art/judging_begins/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 17 Feb 2023 04:32:14 GMT -->
+</html>
